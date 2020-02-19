@@ -6,16 +6,13 @@ public class MyLinkedList<T> {
     private Node<T> head;           //It is the beginning of linked list
     private Node<T> iter;           //It is used to iterate the list
 
-    public MyLinkedList() {
-        iter = head;
-    }
-
     public Node<T> getHead() {
         return head;
     }        //getter for head
 
     public void setHead(Node<T> node) {
         head = node;
+        iter = head;
     }   //setter for head
 
     public Node<T> getIter() {
@@ -79,13 +76,14 @@ public class MyLinkedList<T> {
     //Method to fetch object one by one
     public Node<T> getObject() {
 
-        Node<T> temp = new Node<>();
+        Node<T> temp;
 
         if (getIter() == null && getHead() == null) {
             System.out.println("List is empty");
             return null;
         } else if (getIter() == null) {
-            setIter(getHead());
+            System.out.println("Null");
+            return getIter();
         }
         temp = getIter();
         setIter(getIter().getNext());
