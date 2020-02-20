@@ -1,5 +1,7 @@
 package database;
 
+import person.Person;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +23,28 @@ public class DatabaseHelper {
             e.printStackTrace();
         }
         return id;
+    }
+
+    public void enterData(Connection connection, Person person) {
+        PreparedStatement preparedStatementForPhoneBook = null;
+        PreparedStatement preparedStatementForPhoneNumbers = null;
+        try {
+            preparedStatementForPhoneBook = connection.prepareStatement("insert into phoneBook values (?,?,?,?)");
+            preparedStatementForPhoneBook.setInt(1, person.getPersonID());
+            preparedStatementForPhoneBook.setString(2, person.getFirstName());
+            preparedStatementForPhoneBook.setString(3, person.getLastName());
+            preparedStatementForPhoneBook.setString(4, person.getEmailID());
+
+            String phoneNumber = person.getPhoneNumber();
+            while (phoneNumber != null) {
+                preparedStatementForPhoneNumbers = connection.prepareStatement("insert into phoneNumbers values (?,?)");
+                preparedStatementForPhoneNumbers.setInt(1, person.getPersonID());
+                preparedStatementForPhoneNumbers.setString(2, phoneNumber);
+                phoneNumber = person.getPhoneNumber();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
