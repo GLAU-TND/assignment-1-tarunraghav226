@@ -1,34 +1,31 @@
-import database.DatabaseConnection;
-import database.DatabaseHelper;
-import person.Person;
+import menu.Menu;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        if (databaseConnection.makeConnection())
-            System.out.println("Connection Started");
-        else
-            System.out.println("connection not started");
-        DatabaseHelper databaseHelper = new DatabaseHelper();
-        /*databaseHelper.getMaxId(databaseConnection.getConnection());
-        Person person = new Person();
-        person.setFirstName("fa");
-        person.setLastName("lds");
-        person.setEmailID("eqew");
-        person.setPersonID(2);
-        person.setPhoneNumbers("1123");
-        person.setPhoneNumbers("1123423");
-        person.setPhoneNumbers("11233453");
-        databaseHelper.enterData(databaseConnection.getConnection(), person);*/
-        ArrayList<Person> arrayList = databaseHelper.searchRecord(databaseConnection.getConnection(), "fa");
-        for (int i = 0; i < arrayList.size(); i++) {
-            System.out.println(arrayList.get(i));
+    public static void main(String[] args) throws SQLException {
+        boolean flag = true;
+        Menu menu = new Menu();
+        while (flag) {
+            int n = menu.showChoice();
+            switch (n) {
+                case 1:
+                    menu.addChoice();
+                    break;
+                case 2:
+                    menu.viewChoice();
+                    break;
+                case 3:
+                    menu.searchChoice();
+                    break;
+                case 4:
+                    menu.deleteChoice();
+                    break;
+                case 5:
+                    menu.exitChoice();
+                    flag = false;
+                    break;
+            }
         }
-        if (databaseConnection.closeConnection())
-            System.out.println("connection closed");
-        else
-            System.out.println("error");
     }
 }
