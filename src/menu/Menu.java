@@ -5,6 +5,8 @@ import database.DatabaseHelper;
 import person.Person;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Menu {
     DatabaseHelper databaseHelper;
@@ -95,6 +97,26 @@ public class Menu {
         }
         person.setEmailID(email);
         databaseHelper.enterData(databaseConnection.getConnection(), person);
+    }
+
+    private boolean checkName(String name) {
+        boolean flag = false;
+        final String regex = "^\\w*$";
+
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(name);
+
+        return matcher.matches();
+    }
+
+    private boolean checkEmail(String name) {
+        boolean flag = false;
+        return flag;
+    }
+
+    private boolean checkNumber(String name) {
+        boolean flag = false;
+        return flag;
     }
 
 }
