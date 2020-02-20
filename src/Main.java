@@ -1,4 +1,5 @@
 import database.DatabaseConnection;
+import database.DatabaseHelper;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,6 +8,8 @@ public class Main {
             System.out.println("Connection Started");
         else
             System.out.println("connection not started");
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        databaseHelper.getMaxId(databaseConnection.getConnection());
         if (databaseConnection.closeConnection())
             System.out.println("connection closed");
         else
