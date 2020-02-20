@@ -1,0 +1,100 @@
+package menu;
+
+import database.DatabaseConnection;
+import database.DatabaseHelper;
+import person.Person;
+
+import java.util.Scanner;
+
+public class Menu {
+    DatabaseHelper databaseHelper;
+    DatabaseConnection databaseConnection;
+    Scanner scan;
+
+    public Menu() {
+        scan = new Scanner(System.in);
+        databaseHelper = new DatabaseHelper();
+        databaseConnection = new DatabaseConnection();
+        databaseConnection.makeConnection();
+    }
+
+    public int showChoice() {
+        System.out.println("Welcome to Tarun's Contact List App\n" +
+                "Press 1 to add a new contact\n" +
+                "Press 2 to view all contacts\n" +
+                "Press 3 to search for a contact\n" +
+                "Press 4 to delete a contact\n" +
+                "Press 5 to exit program");
+        return scan.nextInt();
+    }
+
+    public void addChoice() {
+        Person person = new Person();
+        String name;
+        System.out.println("You have chosen to add a new contact: \n" +
+                "Please enter the name of the Person\n");
+        while (true) {
+            System.out.print("First Name: ");
+            name = scan.nextLine().trim();
+            if (checkName(name)) {
+                person.setFirstName(name);
+                break;
+            } else {
+                System.out.println("Enter Correctly");
+            }
+        }
+
+        while (true) {
+            System.out.print("Last Name: ");
+            name = scan.nextLine().trim();
+            if (checkName(name)) {
+                person.setLastName(name);
+                break;
+            } else {
+                System.out.println("Enter Correctly");
+            }
+        }
+
+        String number;
+        while (true) {
+            System.out.print("Contact Number: ");
+            number = scan.nextLine().trim();
+            if (checkNumber(number)) {
+                person.setPhoneNumbers(number);
+                break;
+            } else {
+                System.out.println("Enter Correctly");
+            }
+        }
+
+        char c;
+        System.out.print("Would you like to add another contact number? (y/n): ");
+        c = scan.nextLine().trim().charAt(0);
+        while (c == 'y') {
+            number = scan.nextLine().trim();
+            if (checkNumber(number)) {
+                person.setPhoneNumbers(number);
+                break;
+            } else {
+                System.out.println("Enter Correctly");
+            }
+            System.out.print("Would you like to add another contact number? (y/n): ");
+            c = scan.nextLine().trim().charAt(0);
+        }
+        String email = null;
+        System.out.print("Would you like to add email address? (y/n): ");
+        c = scan.nextLine().trim().charAt(0);
+        if (c == 'y') {
+            while (true) {
+                System.out.print("Email Address: ");
+                email = scan.nextLine().trim();
+                if (checkEmail(email)) {
+                    break;
+                }
+            }
+        }
+        person.setEmailID(email);
+        databaseHelper.enterData(databaseConnection.getConnection(), person);
+    }
+
+}
