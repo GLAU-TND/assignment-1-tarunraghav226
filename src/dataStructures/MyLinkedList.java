@@ -82,7 +82,8 @@ public class MyLinkedList<T> {
             System.out.println("List is empty");
             return null;
         } else if (getIter() == null) {
-            return getIter();
+            setIter(getHead());
+            return null;
         }
         temp = getIter();
         setIter(getIter().getNext());
