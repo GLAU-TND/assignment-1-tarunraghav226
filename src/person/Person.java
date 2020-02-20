@@ -3,8 +3,9 @@ package person;
 import dataStructures.MyLinkedList;
 import node.Node;
 
-public class Person {
+public class Person implements Comparable<Person> {
 
+    private int personID;                      //Primary key used in database
     private String firstName;                   //First name of person
     private String lastName;                    //Last name of person
     private String emailID;                     //EmailId of person
@@ -13,6 +14,16 @@ public class Person {
     //Constructor for person class
     public Person() {
         phoneNumbers = new MyLinkedList<>();
+    }
+
+    //Getter for personID
+    public int getPersonID() {
+        return personID;
+    }
+
+    //Setter for personID
+    public void setPersonID(int personID) {
+        this.personID = personID;
     }
 
     //Getter for first name
@@ -72,11 +83,17 @@ public class Person {
                 allPhoneNumbers.append(", ");
         }
 
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", emailID='" + emailID + '\'' +
-                ", phoneNumbers=" + allPhoneNumbers +
-                '}';
+        return "-------- * -------- * -------- * --------\n" +
+                "First Name: " + this.getFirstName() + "\n" +
+                "Last Name: " + this.getLastName() + "\n" +
+                "Contact Number(s): " + allPhoneNumbers + "\n" +
+                "Email address: " + this.getEmailID() + "\n" +
+                "-------- * -------- * -------- * --------";
+    }
+
+    //compareTo method for comparing objects of person class
+    @Override
+    public int compareTo(Person newPerson) {
+        return this.getFirstName().compareTo(newPerson.getFirstName());
     }
 }
