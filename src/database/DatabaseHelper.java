@@ -34,6 +34,7 @@ public class DatabaseHelper {
             preparedStatementForPhoneBook.setString(2, person.getFirstName());
             preparedStatementForPhoneBook.setString(3, person.getLastName());
             preparedStatementForPhoneBook.setString(4, person.getEmailID());
+            preparedStatementForPhoneBook.executeUpdate();
 
             String phoneNumber = person.getPhoneNumber();
             while (phoneNumber != null) {
@@ -41,6 +42,7 @@ public class DatabaseHelper {
                 preparedStatementForPhoneNumbers.setInt(1, person.getPersonID());
                 preparedStatementForPhoneNumbers.setString(2, phoneNumber);
                 phoneNumber = person.getPhoneNumber();
+                preparedStatementForPhoneNumbers.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
