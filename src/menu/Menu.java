@@ -139,4 +139,19 @@ public class Menu {
         }
     }
 
+    public void searchChoice() {
+        System.out.print("You could search for a contact from their first names: ");
+        String name = scan.nextLine().trim();
+        while (true) {
+            if (checkName(name))
+                break;
+            else
+                System.out.println("Enter Correctly");
+        }
+        ArrayList<Person> arrayList = databaseHelper.searchRecord(databaseConnection.getConnection(), name);
+        System.out.println(arrayList.size() + " match found!");
+        for (int i = 0; i < arrayList.size(); i++) {
+            System.out.println(arrayList.get(i));
+        }
+    }
 }
