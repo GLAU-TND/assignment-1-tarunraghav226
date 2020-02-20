@@ -4,6 +4,7 @@ import database.DatabaseConnection;
 import database.DatabaseHelper;
 import person.Person;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -153,5 +154,9 @@ public class Menu {
         for (int i = 0; i < arrayList.size(); i++) {
             System.out.println(arrayList.get(i));
         }
+    }
+
+    public void deleteChoice() throws SQLException {
+        databaseHelper.deleteRecords(databaseConnection.getConnection());
     }
 }
