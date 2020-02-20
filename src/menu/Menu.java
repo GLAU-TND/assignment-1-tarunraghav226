@@ -103,7 +103,7 @@ public class Menu {
 
     private boolean checkName(String name) {
         boolean flag = false;
-        final String regex = "^\\w*$";
+        final String regex = "^[a-z]*$";
 
         final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher matcher = pattern.matcher(name);
@@ -111,9 +111,14 @@ public class Menu {
         return matcher.matches();
     }
 
-    private boolean checkEmail(String name) {
+    private boolean checkEmail(String email) {
         boolean flag = false;
-        return flag;
+        final String regex = "^\\w+[\\w-\\.]*\\@\\w+((-\\w+)|(\\w*))\\.[a-z]{2,3}$";
+
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
     }
 
     private boolean checkNumber(String number) {
