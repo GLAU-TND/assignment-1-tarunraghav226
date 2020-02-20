@@ -4,6 +4,7 @@ import database.DatabaseConnection;
 import database.DatabaseHelper;
 import person.Person;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -128,6 +129,14 @@ public class Menu {
         final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher matcher = pattern.matcher(number);
         return matcher.matches();
+    }
+
+    public void viewChoice() {
+        ArrayList<Person> arrayList = databaseHelper.getAllPhoneRecord(databaseConnection.getConnection());
+        System.out.println("---Here are all your contacts---");
+        for (int i = 0; i < arrayList.size(); i++) {
+            System.out.println(arrayList.get(i));
+        }
     }
 
 }
