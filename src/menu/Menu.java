@@ -6,6 +6,7 @@ import person.Person;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -134,6 +135,7 @@ public class Menu {
 
     public void viewChoice() {
         ArrayList<Person> arrayList = databaseHelper.getAllPhoneRecord(databaseConnection.getConnection());
+        Collections.sort(arrayList);
         System.out.println("---Here are all your contacts---");
         for (int i = 0; i < arrayList.size(); i++) {
             System.out.println(arrayList.get(i));
