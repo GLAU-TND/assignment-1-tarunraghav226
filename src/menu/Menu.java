@@ -92,6 +92,8 @@ public class Menu {
                 email = scan.nextLine().trim();
                 if (checkEmail(email)) {
                     break;
+                } else {
+                    System.out.println("Enter correctly");
                 }
             }
         }
@@ -114,9 +116,13 @@ public class Menu {
         return flag;
     }
 
-    private boolean checkNumber(String name) {
+    private boolean checkNumber(String number) {
         boolean flag = false;
-        return flag;
+        final String regex = "^\\d{10}$";
+
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(number);
+        return matcher.matches();
     }
 
 }
