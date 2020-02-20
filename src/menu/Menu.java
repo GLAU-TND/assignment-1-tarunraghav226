@@ -38,6 +38,7 @@ public class Menu {
         String name;
         System.out.println("You have chosen to add a new contact: \n" +
                 "Please enter the name of the Person\n");
+        scan.nextLine();
         while (true) {
             System.out.print("First Name: ");
             name = scan.nextLine().trim();
@@ -76,16 +77,18 @@ public class Menu {
         System.out.print("Would you like to add another contact number? (y/n): ");
         c = scan.nextLine().trim().charAt(0);
         while (c == 'y') {
+            System.out.print("Contact Number: ");
             number = scan.nextLine().trim();
             if (checkNumber(number)) {
                 person.setPhoneNumbers(number);
-                break;
             } else {
                 System.out.println("Enter Correctly");
             }
             System.out.print("Would you like to add another contact number? (y/n): ");
             c = scan.nextLine().trim().charAt(0);
         }
+
+
         String email = null;
         System.out.print("Would you like to add email address? (y/n): ");
         c = scan.nextLine().trim().charAt(0);
@@ -100,6 +103,7 @@ public class Menu {
                 }
             }
         }
+        person.setPersonID(databaseHelper.getMaxId(databaseConnection.getConnection()) + 1);
         person.setEmailID(email);
         databaseHelper.enterData(databaseConnection.getConnection(), person);
     }
@@ -144,6 +148,7 @@ public class Menu {
 
     public void searchChoice() {
         System.out.print("You could search for a contact from their first names: ");
+        scan.nextLine();
         String name = scan.nextLine().trim();
         while (true) {
             if (checkName(name))
