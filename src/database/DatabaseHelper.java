@@ -2,10 +2,7 @@ package database;
 
 import person.Person;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -46,6 +43,16 @@ public class DatabaseHelper {
                 phoneNumber = person.getPhoneNumber();
                 preparedStatementForPhoneNumbers.executeUpdate();
             }
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            try {
+                preparedStatementForPhoneBook = connection.prepareStatement("delete from phoneBook where primarykey = ?");
+                preparedStatementForPhoneBook.setInt(1, person.getPersonID());
+                preparedStatementForPhoneBook.executeUpdate();
+            } catch (SQLException ea) {
+                ea.printStackTrace();
+            }
+            System.out.println();
         } catch (SQLException e) {
             e.printStackTrace();
         }
