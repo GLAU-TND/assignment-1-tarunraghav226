@@ -12,7 +12,7 @@ public class Main {
         else
             System.out.println("connection not started");
         DatabaseHelper databaseHelper = new DatabaseHelper();
-        databaseHelper.getMaxId(databaseConnection.getConnection());
+        /*databaseHelper.getMaxId(databaseConnection.getConnection());
         Person person = new Person();
         person.setFirstName("fa");
         person.setLastName("lds");
@@ -21,8 +21,8 @@ public class Main {
         person.setPhoneNumbers("1123");
         person.setPhoneNumbers("1123423");
         person.setPhoneNumbers("11233453");
-        databaseHelper.enterData(databaseConnection.getConnection(), person);
-        ArrayList<Person> arrayList = databaseHelper.getAllPhoneRecord(databaseConnection.getConnection());
+        databaseHelper.enterData(databaseConnection.getConnection(), person);*/
+        ArrayList<Person> arrayList = databaseHelper.searchRecord(databaseConnection.getConnection(), "fa");
         for (int i = 0; i < arrayList.size(); i++) {
             System.out.println(arrayList.get(i));
         }
