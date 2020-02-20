@@ -159,4 +159,8 @@ public class Menu {
     public void deleteChoice() throws SQLException {
         databaseHelper.deleteRecords(databaseConnection.getConnection());
     }
+
+    public void exitChoice() {
+        databaseConnection.closeConnection();
+    }
 }
