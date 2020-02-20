@@ -56,25 +56,44 @@ public class DatabaseHelper {
         ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement("select * from phoneBook");
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Person person = new Person();
-                person.setFirstName(resultSet.getNString("firstName"));
-                person.setLastName(resultSet.getNString("lastName"));
-                person.setEmailID(resultSet.getNString("emailID"));
-                person.setPersonID(resultSet.getInt("primarykey"));
-                PreparedStatement preparedStatement1 = connection.prepareStatement("select * from phoneNumbers where primarykey = ?");
-                preparedStatement1.setInt(1, person.getPersonID());
-                ResultSet resultSet1 = preparedStatement1.executeQuery();
-                while (resultSet1.next()) {
-                    person.setPhoneNumbers(resultSet1.getNString("phonenumber"));
-                }
-                arrayList.add(person);
-            }
+            getRecords(connection, arrayList, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return arrayList;
+    }
+
+    public ArrayList<Person> searchRecord(Connection connection, String firstName) {
+        ArrayList<Person> arrayList = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement("select * from phoneBook where firstName= ?");
+            preparedStatement.setString(1, firstName);
+            getRecords(connection, arrayList, preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return arrayList;
+    }
+
+    private void getRecords(Connection connection, ArrayList<Person> arrayList, PreparedStatement preparedStatement) throws SQLException {
+        ResultSet resultSet;
+        resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Person person = new Person();
+            person.setFirstName(resultSet.getNString("firstName"));
+            person.setLastName(resultSet.getNString("lastName"));
+            person.setEmailID(resultSet.getNString("emailID"));
+            person.setPersonID(resultSet.getInt("primarykey"));
+            PreparedStatement preparedStatement1 = connection.prepareStatement("select * from phoneNumbers where primarykey = ?");
+            preparedStatement1.setInt(1, person.getPersonID());
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet1.next()) {
+                person.setPhoneNumbers(resultSet1.getNString("phonenumber"));
+            }
+            arrayList.add(person);
+        }
     }
 
 }
