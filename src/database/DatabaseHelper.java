@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DatabaseHelper {
 
@@ -96,4 +97,28 @@ public class DatabaseHelper {
         }
     }
 
+    public void deleteRecords(Connection connection) throws SQLException {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Person> arrayList = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from phoneBook");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        System.out.println("Here are all your contacts:");
+        getRecords(connection, arrayList, preparedStatement);
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            System.out.println((i + 1) + ". " + arrayList.get(i).getFirstName() + " " + arrayList.get(i).getLastName());
+        }
+        System.out.print("Press the number against the contact to delete it: ");
+        Person person = arrayList.get(scan.nextInt() - 1);
+
+        preparedStatement = connection.prepareStatement("delete  from phoneNumbers where primarykey = ?");
+        preparedStatement.setInt(1, person.getPersonID());
+        preparedStatement.executeUpdate();
+
+        preparedStatement = connection.prepareStatement("delete from phoneBook where firstName = ? and lastName = ?");
+        preparedStatement.setString(1, person.getFirstName());
+        preparedStatement.setString(2, person.getLastName());
+        preparedStatement.executeUpdate();
+        System.out.println(person.getFirstName() + " " + person.getLastName() + "'s contact deleted from list!");
+    }
 }
