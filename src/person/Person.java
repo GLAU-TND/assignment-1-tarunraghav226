@@ -1,5 +1,6 @@
 package person;
 
+
 import dataStructures.MyLinkedList;
 import node.Node;
 
@@ -96,4 +97,3 @@ public class Person implements Comparable<Person> {
     public int compareTo(Person newPerson) {
         return this.getFirstName().compareTo(newPerson.getFirstName());
     }
-}
