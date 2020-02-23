@@ -1,17 +1,18 @@
 package menu;
 
+import dataStructures.MyLinkedList;
 import database.DatabaseConnection;
 import database.DatabaseHelper;
+import interfaces.MenuInterface;
+import node.Node;
 import person.Person;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Menu {
+public class Menu implements MenuInterface {
     DatabaseHelper databaseHelper;
     DatabaseConnection databaseConnection;
     Scanner scan;
@@ -138,11 +139,14 @@ public class Menu {
     }
 
     public void viewChoice() {
-        ArrayList<Person> arrayList = databaseHelper.getAllPhoneRecord(databaseConnection.getConnection());
-        Collections.sort(arrayList);
+        MyLinkedList<Person> linkedList = databaseHelper.getAllPhoneRecord(databaseConnection.getConnection());
+        linkedList.sort();
         System.out.println("---Here are all your contacts---");
-        for (int i = 0; i < arrayList.size(); i++) {
-            System.out.println(arrayList.get(i));
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            System.out.println(node.getData());
         }
     }
 
@@ -156,10 +160,20 @@ public class Menu {
             else
                 System.out.println("Enter Correctly");
         }
-        ArrayList<Person> arrayList = databaseHelper.searchRecord(databaseConnection.getConnection(), name);
-        System.out.println(arrayList.size() + " match found!");
-        for (int i = 0; i < arrayList.size(); i++) {
-            System.out.println(arrayList.get(i));
+        MyLinkedList<Person> linkedList = databaseHelper.searchRecord(databaseConnection.getConnection(), name);
+        int counter = 0;
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            counter++;
+        }
+        System.out.println(counter + " match found!");
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            System.out.println(node.getData());
         }
     }
 
@@ -168,6 +182,7 @@ public class Menu {
     }
 
     public void exitChoice() {
+        System.out.println("Exiting...");
         databaseConnection.closeConnection();
     }
 }

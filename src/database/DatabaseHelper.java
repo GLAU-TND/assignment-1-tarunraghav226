@@ -1,9 +1,10 @@
 package database;
 
+import dataStructures.MyLinkedList;
+import node.Node;
 import person.Person;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DatabaseHelper {
@@ -58,34 +59,34 @@ public class DatabaseHelper {
         }
     }
 
-    public ArrayList<Person> getAllPhoneRecord(Connection connection) {
-        ArrayList<Person> arrayList = new ArrayList<>();
+    public MyLinkedList<Person> getAllPhoneRecord(Connection connection) {
+        MyLinkedList<Person> linkedList = new MyLinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement("select * from phoneBook");
-            getRecords(connection, arrayList, preparedStatement);
+            getRecords(connection, linkedList, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return arrayList;
+        return linkedList;
     }
 
-    public ArrayList<Person> searchRecord(Connection connection, String firstName) {
-        ArrayList<Person> arrayList = new ArrayList<>();
+    public MyLinkedList<Person> searchRecord(Connection connection, String firstName) {
+        MyLinkedList<Person> linkedList = new MyLinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement("select * from phoneBook where firstName= ?");
             preparedStatement.setString(1, firstName);
-            getRecords(connection, arrayList, preparedStatement);
+            getRecords(connection, linkedList, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return arrayList;
+        return linkedList;
     }
 
-    private void getRecords(Connection connection, ArrayList<Person> arrayList, PreparedStatement preparedStatement) throws SQLException {
+    private void getRecords(Connection connection, MyLinkedList<Person> linkedList, PreparedStatement preparedStatement) throws SQLException {
         ResultSet resultSet;
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -100,23 +101,31 @@ public class DatabaseHelper {
             while (resultSet1.next()) {
                 person.setPhoneNumbers(resultSet1.getNString("phonenumber"));
             }
-            arrayList.add(person);
+            Node<Person> node = new Node<>();
+            node.setData(person);
+            linkedList.insert(node);
         }
     }
 
     public void deleteRecords(Connection connection) throws SQLException {
         Scanner scan = new Scanner(System.in);
-        ArrayList<Person> arrayList = new ArrayList<>();
+        MyLinkedList<Person> linkedList = new MyLinkedList<>();
         PreparedStatement preparedStatement = connection.prepareStatement("select * from phoneBook");
         ResultSet resultSet = preparedStatement.executeQuery();
         System.out.println("Here are all your contacts:");
-        getRecords(connection, arrayList, preparedStatement);
+        getRecords(connection, linkedList, preparedStatement);
 
-        for (int i = 0; i < arrayList.size(); i++) {
-            System.out.println((i + 1) + ". " + arrayList.get(i).getFirstName() + " " + arrayList.get(i).getLastName());
+        int i = 1;
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            System.out.println(i + ". " + node.getData().getFirstName() + " " + node.getData().getLastName());
+            i++;
         }
         System.out.print("Press the number against the contact to delete it: ");
-        Person person = arrayList.get(scan.nextInt() - 1);
+        int position = scan.nextInt();
+        Person person = linkedList.delete(position).getData();
 
         preparedStatement = connection.prepareStatement("delete  from phoneNumbers where primarykey = ?");
         preparedStatement.setInt(1, person.getPersonID());

@@ -84,12 +84,20 @@ public class Person implements Comparable<Person> {
                 allPhoneNumbers.append(", ");
         }
 
-        return "-------- * -------- * -------- * --------\n" +
-                "First Name: " + this.getFirstName() + "\n" +
-                "Last Name: " + this.getLastName() + "\n" +
-                "Contact Number(s): " + allPhoneNumbers + "\n" +
-                "Email address: " + this.getEmailID() + "\n" +
-                "-------- * -------- * -------- * --------";
+        if (getEmailID() == null)
+            return "-------- * -------- * -------- * --------\n" +
+                    "First Name: " + this.getFirstName() + "\n" +
+                    "Last Name: " + this.getLastName() + "\n" +
+                    "Contact Number(s): " + allPhoneNumbers + "\n" +
+                    "-------- * -------- * -------- * --------";
+        else
+
+            return "-------- * -------- * -------- * --------\n" +
+                    "First Name: " + this.getFirstName() + "\n" +
+                    "Last Name: " + this.getLastName() + "\n" +
+                    "Contact Number(s): " + allPhoneNumbers + "\n" +
+                    "Email address: " + this.getEmailID() + "\n" +
+                    "-------- * -------- * -------- * --------";
     }
 
     //compareTo method for comparing objects of person class
@@ -97,3 +105,4 @@ public class Person implements Comparable<Person> {
     public int compareTo(Person newPerson) {
         return this.getFirstName().compareTo(newPerson.getFirstName());
     }
+}

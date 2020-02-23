@@ -1,8 +1,9 @@
 package dataStructures;
 
+import interfaces.LinkedListInterface;
 import node.Node;
 
-public class MyLinkedList<T> {
+public class MyLinkedList<T extends Comparable<T>> implements LinkedListInterface<T> {
     private Node<T> head;           //It is the beginning of linked list
     private Node<T> iter;           //It is used to iterate the list
 
@@ -89,4 +90,22 @@ public class MyLinkedList<T> {
         setIter(getIter().getNext());
         return temp;
     }
+
+    public void sort() {
+        Node<T> pass1 = getHead();
+        Node<T> pass2 = getHead().getNext();
+
+        while (pass1 != null) {
+            while (pass2 != null) {
+                if (pass1.getData().compareTo(pass2.getData()) > 0) {
+                    T temp = pass1.getData();
+                    pass1.setData(pass2.getData());
+                    pass2.setData(temp);
+                }
+                pass2 = pass2.getNext();
+            }
+            pass1 = pass1.getNext();
+        }
+    }
+
 }
