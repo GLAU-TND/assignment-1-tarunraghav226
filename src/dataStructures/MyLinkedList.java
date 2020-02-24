@@ -93,11 +93,10 @@ public class MyLinkedList<T extends Comparable<T>> implements LinkedListInterfac
 
     public void sort() {
         Node<T> pass1 = getHead();
-        Node<T> pass2 = getHead().getNext();
-
         while (pass1 != null) {
+            Node<T> pass2 = getHead();
             while (pass2 != null) {
-                if (pass1.getData().compareTo(pass2.getData()) > 0) {
+                if (pass1.getData().compareTo(pass2.getData()) < 0) {
                     T temp = pass1.getData();
                     pass1.setData(pass2.getData());
                     pass2.setData(temp);
