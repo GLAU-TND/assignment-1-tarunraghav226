@@ -127,14 +127,15 @@ public class DatabaseHelper {
         int position = scan.nextInt();
         Person person = linkedList.delete(position).getData();
 
+        preparedStatement = connection.prepareStatement("delete from phoneBook where primarykey = ?");
+        preparedStatement.setInt(1, person.getPersonID());
+        preparedStatement.executeUpdate();
+
         preparedStatement = connection.prepareStatement("delete  from phoneNumbers where primarykey = ?");
         preparedStatement.setInt(1, person.getPersonID());
         preparedStatement.executeUpdate();
 
-        preparedStatement = connection.prepareStatement("delete from phoneBook where firstName = ? and lastName = ?");
-        preparedStatement.setString(1, person.getFirstName());
-        preparedStatement.setString(2, person.getLastName());
-        preparedStatement.executeUpdate();
+
         System.out.println(person.getFirstName() + " " + person.getLastName() + "'s contact deleted from list!");
     }
 }

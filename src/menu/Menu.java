@@ -95,7 +95,7 @@ public class Menu implements MenuInterface {
         c = scan.nextLine().trim().charAt(0);
         if (c == 'y') {
             while (true) {
-                System.out.print("Email Address: ");
+                System.out.print("Email Address(Only Gmail Accounts): ");
                 email = scan.nextLine().trim();
                 if (checkEmail(email)) {
                     break;
@@ -111,7 +111,7 @@ public class Menu implements MenuInterface {
 
     private boolean checkName(String name) {
         boolean flag = false;
-        final String regex = "^[a-z]*$";
+        final String regex = "^[A-Za-z]*$";
 
         final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher matcher = pattern.matcher(name);
