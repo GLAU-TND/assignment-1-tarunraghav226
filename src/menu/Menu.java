@@ -95,7 +95,7 @@ public class Menu implements MenuInterface {
         c = scan.nextLine().trim().charAt(0);
         if (c == 'y') {
             while (true) {
-                System.out.print("Email Address: ");
+                System.out.print("Email Address(Only Gmail Accounts): ");
                 email = scan.nextLine().trim();
                 if (checkEmail(email)) {
                     break;
